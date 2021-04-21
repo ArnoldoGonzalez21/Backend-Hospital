@@ -30,13 +30,13 @@ def registro_paciente():
     sexo = contenido['sexo']
     nombre_usuario = contenido['nombre_usuario']
     if (existe_usuario(nombre_usuario)):
-        return jsonify({'agregado':0,'mensaje':'Existe el usuario'})
+        return jsonify({'agregado':0,'mensaje':'El Usuario que desea Agregar Ya Existe'})
     contrasena = contenido['contrasena']
     telefono = contenido['telefono']
     paciente_nuevo = Paciente(nombre,apellido,fecha_nacimiento,sexo,nombre_usuario,contrasena,telefono)
     global pacientes
     pacientes.append(paciente_nuevo)
-    return jsonify({'agregado':1,'mensaje':'Registro exitoso'})
+    return jsonify({'agregado':1,'mensaje':'Registro Exitoso'})
 
 
 @app.route('/obtener_paciente', methods=['GET'])
@@ -52,10 +52,10 @@ def login():
     nombre_usuario = request.args.get("nombre_usuario")
     contrasena = request.args.get("contrasena")
     if not existe_usuario(nombre_usuario):
-        return jsonify({'estado':0,'mensaje':'no existe el usuario'})
+        return jsonify({'estado':0,'mensaje':'El Usuario No Existe'})
     if verificar_contrasena(nombre_usuario, contrasena):
-        return jsonify({'estado':1,'mensaje':'login existoso'})
-    return jsonify({'estado':0,'mensaje':'La contraseña es incorrecta'})
+        return jsonify({'estado':1,'mensaje':'Login Existoso'})
+    return jsonify({'estado':0,'mensaje':'La Contraseña es Incorrecta'})
 
 def existe_usuario(nombre_usuario):
     if nombre_usuario == administrador['nombre_usuario']:
