@@ -76,15 +76,17 @@ def verificar_contrasena(nombre_usuario, contrasena):
     return False
 
 reader = object()
-def leer_csv():
-    with open('Archivos_csv/archivo.csv') as File:
+def leer_csv(ruta):
+    #Archivos_csv/,ruta
+    with open('Archivos_csv/'+ruta+'.csv') as File:
         global reader
         reader = csv.reader(File, delimiter=',', quotechar=',',quoting=csv.QUOTE_MINIMAL)
         print('en leer_csv')
         for row in reader:
             print(row)
     return reader
-lee= leer_csv()
+
+lee= leer_csv('medicamento')
 
 if __name__ == '__main__':
     puerto = int(os.environ.get('PORT',3000))
