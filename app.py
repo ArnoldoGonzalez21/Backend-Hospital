@@ -8,8 +8,8 @@ app = Flask(__name__)
 CORS(app)
 
 administrador = {
-    "nombre":"Arnoldo",
-    "apellido":"González",
+    "nombre":"Ingrid",
+    "apellido":"Perez",
     "nombre_usuario":"admin",
     "contrasena":"1234"   
 } 
@@ -22,7 +22,7 @@ def principal():
 
 @app.route('/registro_paciente', methods=['POST'])
 def registro_paciente():
-    contenido = requets.get_json()
+    contenido = request.get_json()
     nombre = contenido['nombre']
     apellido = contenido['apellido']
     fecha_nacimiento = contenido['fecha_nacimiento']
