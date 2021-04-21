@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 import json
 import os
+import csv
 from Paciente import Paciente
 
 app = Flask(__name__)
@@ -72,8 +73,19 @@ def verificar_contrasena(nombre_usuario, contrasena):
     for paciente in pacientes:
         if paciente.nombre_usuario == nombre_usuario and paciente.contrasena == contrasena:
             return True
-    return False 
-    
+    return False
+
+reader = object()
+def leer_csv():
+    with open('Archivos_csv/archivo.csv') as File:
+        global reader
+        reader = csv.reader(File, delimiter=',', quotechar=',',quoting=csv.QUOTE_MINIMAL)
+        print('en leer_csv')
+        for row in reader:
+            print(row)
+    return reader
+lee= leer_csv()
+
 if __name__ == '__main__':
     puerto = int(os.environ.get('PORT',3000))
     app.run(host= '0.0.0.0',port=puerto)
