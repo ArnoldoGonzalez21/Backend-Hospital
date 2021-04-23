@@ -75,13 +75,14 @@ def verificar_contrasena(nombre_usuario, contrasena):
             return True
     return False
 
-reader = object()
-def leer_csv(ruta):
-    #Archivos_csv/,ruta
+
+@app.route('/leer_csv', methods=['POST'])
+def leer_csv():
+    contenido = request.get_json()
+    ruta = contenido['ruta']
+    print('entre aca')
     with open('Archivos_csv/'+ruta+'.csv') as File:
-        global reader
         reader = csv.reader(File, delimiter=',', quotechar=',',quoting=csv.QUOTE_MINIMAL)
-        print('en leer_csv')
         for row in reader:
             print(row)
     return reader
