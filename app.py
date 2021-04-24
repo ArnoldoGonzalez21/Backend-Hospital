@@ -4,6 +4,7 @@ import json
 import os
 import csv
 from Paciente import Paciente
+from Enfermera import Enfermera
 
 app = Flask(__name__)
 CORS(app)
@@ -33,7 +34,7 @@ def registro_paciente():
     sexo = contenido['sexo']
     nombre_usuario = contenido['nombre_usuario']
     if (existe_usuario(nombre_usuario)):
-        return jsonify({'agregado':0,'mensaje':'El Usuario que desea Agregar Ya Chinga Existe'})
+        return jsonify({'agregado':0,'mensaje':'El Usuario que desea Agregar Ya Existe'})
     contrasena = contenido['contrasena']
     telefono = contenido['telefono']
     paciente_nuevo = Paciente(nombre,apellido,fecha_nacimiento,sexo,nombre_usuario,contrasena,telefono)
