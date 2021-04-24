@@ -88,9 +88,8 @@ def obtener_enfermera():
         json_enfermera.append(enfermera.get_json())
     return jsonify(json_enfermera)
 
-
 @app.route('/registro_enfermera', methods=['POST'])
-def registro_personal():
+def registro_enfermera():
     contenido = request.get_json()
     nombre = contenido['nombre']
     apellido = contenido['apellido']
@@ -115,7 +114,6 @@ def existe_usuario_enfermera(nombre_usuario):
         if enfermera.nombre_usuario == nombre_usuario:
             return True
     return False
-
 
 if __name__ == '__main__':
     puerto = int(os.environ.get('PORT',3000))
