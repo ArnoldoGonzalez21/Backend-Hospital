@@ -106,6 +106,15 @@ def existe_usuario_enfermera(nombre_usuario):
             return True
     return False
 
+def verificar_contrasena_enfermera(nombre_usuario, contrasena):
+    if nombre_usuario == administrador['nombre_usuario'] and contrasena == administrador['contrasena']:
+        return True
+    global enfermeras
+    for enfermera in enfermeras:
+        if enfermera.nombre_usuario == nombre_usuario and enfermera.contrasena == contrasena:
+            return True
+    return False
+
 #---------------------------Doctor----------------------------------
 @app.route('/obtener_doctor', methods=['GET'])
 def obtener_doctor():
@@ -138,6 +147,15 @@ def existe_usuario_doctor(nombre_usuario):
     global doctores
     for doctor in doctores:
         if doctor.nombre_usuario == nombre_usuario:
+            return True
+    return False
+
+def verificar_contrasena_doctor(nombre_usuario, contrasena):
+    if nombre_usuario == administrador['nombre_usuario'] and contrasena == administrador['contrasena']:
+        return True
+    global doctores
+    for doctor in doctores:
+        if doctor.nombre_usuario == nombre_usuario and doctor.contrasena == contrasena:
             return True
     return False
 
@@ -178,9 +196,15 @@ def login():
     nombre_usuario = request.args.get("nombre_usuario")
     contrasena = request.args.get("contrasena")
     if not existe_usuario(nombre_usuario):
-        return jsonify({'estado':0,'mensaje':'El Usuario No Existe'})
+        if not existe_usuario_enfermera(nombre_usuario):
+            if not existe_usuario_doctor(nombre_usuario):
+                return jsonify({'estado':0,'mensaje':'El Usuario No Existe'})
     if verificar_contrasena(nombre_usuario, contrasena):
         return jsonify({'estado':1,'mensaje':'Login Existoso'})
+    elif verificar_contrasena_enfermera(nombre_usuario, contrasena):
+        return jsonify({'estado':2,'mensaje':'Login Existoso'})
+    elif verificar_contrasena_doctor(nombre_usuario, contrasena):
+        return jsonify({'estado':3,'mensaje':'Login Existoso'})
     return jsonify({'estado':0,'mensaje':'La Contraseña es Incorrecta'})
 
 
