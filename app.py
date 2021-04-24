@@ -33,7 +33,7 @@ def registro_paciente():
     sexo = contenido['sexo']
     nombre_usuario = contenido['nombre_usuario']
     if (existe_usuario(nombre_usuario)):
-        return jsonify({'agregado':0,'mensaje':'El Usuario que desea Agregar Ya Existe'})
+        return jsonify({'agregado':0,'mensaje':'El Usuario que desea Agregar Ya Chinga Existe'})
     contrasena = contenido['contrasena']
     telefono = contenido['telefono']
     paciente_nuevo = Paciente(nombre,apellido,fecha_nacimiento,sexo,nombre_usuario,contrasena,telefono)
@@ -96,26 +96,24 @@ def registro_personal():
     fecha_nacimiento = contenido['fecha_nacimiento']
     sexo = contenido['sexo']
     nombre_usuario = contenido['nombre_usuario']
-    if (existe_usuario(nombre_usuario)):
-        return jsonify({'agregado':0,'mensaje':'El Usuario que desea Agregar Ya Existe'})
+    if (existe_usuario_enfermera(nombre_usuario)):
+        return jsonify({'agregado':0,'mensaje':'El Usuario que DESEA Agregar Ya Existe'})
     contrasena = contenido['contrasena']
     telefono = contenido['telefono']
     enfermera_nueva = Enfermera(nombre,apellido,fecha_nacimiento,sexo,nombre_usuario,contrasena,telefono)
     global enfermeras
     enfermeras.append(enfermera_nueva)
-    return jsonify({'agregado':1,'mensaje':'Registro Exitoso'})
+    return jsonify({'agregado':2,'mensaje':'Registro Exitoso'})
 
 
-@app.route('/leer_csv', methods=['POST'])
-def leer_csv():
-    contenido = request.get_json()
-    ruta = contenido['ruta']
-    print('entre aca')
-    with open('Archivos_csv/'+ruta+'.csv') as File:
-        reader = csv.reader(File, delimiter=',', quotechar=',',quoting=csv.QUOTE_MINIMAL)
-        for row in reader:
-            print(row)
-    return reader
+def existe_usuario_enfermera(nombre_usuario):
+    if nombre_usuario == administrador['nombre_usuario']:
+        return True
+    global enfermeras
+    for enfermera in enfermeras:
+        if enfermera.nombre_usuario == nombre_usuario:
+            return True
+    return False
 
 
 if __name__ == '__main__':
