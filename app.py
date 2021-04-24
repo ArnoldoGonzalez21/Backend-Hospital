@@ -57,10 +57,17 @@ def existe_usuario(nombre_usuario):
     if nombre_usuario == administrador['nombre_usuario']:
         return True
     global pacientes
+    global enfermeras
+    global doctores
     for paciente in pacientes:
         if paciente.nombre_usuario == nombre_usuario:
             return True
-    return False
+    for enfermera in enfermeras:
+        if enfermera.nombre_usuario == nombre_usuario:
+            return True
+    for doctor in doctores:
+        if doctor.nombre_usuario == nombre_usuario:
+            return True
 
 def verificar_contrasena(nombre_usuario, contrasena):
     if nombre_usuario == administrador['nombre_usuario'] and contrasena == administrador['contrasena']:
@@ -101,9 +108,17 @@ def existe_usuario_enfermera(nombre_usuario):
     if nombre_usuario == administrador['nombre_usuario']:
         return True
     global enfermeras
+    global doctores
+    global pacientes
     for enfermera in enfermeras:
         if enfermera.nombre_usuario == nombre_usuario:
             return True
+    for doctor in doctores:
+        if doctor.nombre_usuario == nombre_usuario:
+            return True
+    for paciente in pacientes:
+        if paciente.nombre_usuario == nombre_usuario:
+            return True 
     return False
 
 def verificar_contrasena_enfermera(nombre_usuario, contrasena):
@@ -145,9 +160,17 @@ def existe_usuario_doctor(nombre_usuario):
     if nombre_usuario == administrador['nombre_usuario']:
         return True
     global doctores
+    global enfermeras
+    global pacientes
     for doctor in doctores:
         if doctor.nombre_usuario == nombre_usuario:
             return True
+    for enfermera in enfermeras:
+        if enfermera.nombre_usuario == nombre_usuario:
+            return True
+    for paciente in pacientes:
+        if paciente.nombre_usuario == nombre_usuario:
+            return True          
     return False
 
 def verificar_contrasena_doctor(nombre_usuario, contrasena):
@@ -197,7 +220,7 @@ def login():
     contrasena = request.args.get("contrasena")
     if nombre_usuario == administrador['nombre_usuario'] and contrasena == administrador['contrasena']:
         return jsonify({'estado':4,'mensaje':'Login Exitoso Administrador'})
-    if not existe_usuario(nombre_usuario) and not existe_usuario_enfermera(nombre_usuario) and not existe_usuario_doctor(nombre_usuario):
+    if (not existe_usuario(nombre_usuario)) and (not existe_usuario_enfermera(nombre_usuario)) and (not existe_usuario_doctor(nombre_usuario)):
         return jsonify({'estado':0,'mensaje':'El Usuario No Existe'})
     if verificar_contrasena(nombre_usuario, contrasena):
         return jsonify({'estado':1,'mensaje':'Login Existoso Paciente'})
