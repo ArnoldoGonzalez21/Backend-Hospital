@@ -16,6 +16,9 @@ administrador = {
 } 
 
 pacientes = []
+enfermeras = []
+doctores = []
+medicamentos = []
 
 @app.route('/', methods=['GET'])
 def principal():
@@ -76,6 +79,33 @@ def verificar_contrasena(nombre_usuario, contrasena):
     return False
 
 
+@app.route('/obtener_enfermera', methods=['GET'])
+def obtener_enfermera():
+    json_enfermera = []
+    global enfermeras
+    for enfermera in enfermeras:
+        json_enfermera.append(enfermera.get_json())
+    return jsonify(json_enfermera)
+
+
+@app.route('/registro_enfermera', methods=['POST'])
+def registro_personal():
+    contenido = request.get_json()
+    nombre = contenido['nombre']
+    apellido = contenido['apellido']
+    fecha_nacimiento = contenido['fecha_nacimiento']
+    sexo = contenido['sexo']
+    nombre_usuario = contenido['nombre_usuario']
+    if (existe_usuario(nombre_usuario)):
+        return jsonify({'agregado':0,'mensaje':'El Usuario que desea Agregar Ya Existe'})
+    contrasena = contenido['contrasena']
+    telefono = contenido['telefono']
+    enfermera_nueva = Enfermera(nombre,apellido,fecha_nacimiento,sexo,nombre_usuario,contrasena,telefono)
+    global enfermeras
+    enfermeras.append(enfermera_nueva)
+    return jsonify({'agregado':1,'mensaje':'Registro Exitoso'})
+
+
 @app.route('/leer_csv', methods=['POST'])
 def leer_csv():
     contenido = request.get_json()
@@ -87,7 +117,6 @@ def leer_csv():
             print(row)
     return reader
 
-lee= leer_csv('medicamento')
 
 if __name__ == '__main__':
     puerto = int(os.environ.get('PORT',3000))
