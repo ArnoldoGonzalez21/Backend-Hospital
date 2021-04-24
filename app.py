@@ -5,6 +5,8 @@ import os
 import csv
 from Paciente import Paciente
 from Enfermera import Enfermera
+from Doctor import Doctor
+from Medicamento import Medicamento
 
 app = Flask(__name__)
 CORS(app)
@@ -25,6 +27,7 @@ medicamentos = []
 def principal():
     return 'Por fin'
 
+#---------------------------Paciente----------------------------------
 @app.route('/registro_paciente', methods=['POST'])
 def registro_paciente():
     contenido = request.get_json()
@@ -42,7 +45,6 @@ def registro_paciente():
     pacientes.append(paciente_nuevo)
     return jsonify({'agregado':1,'mensaje':'Registro Exitoso'})
 
-
 @app.route('/obtener_paciente', methods=['GET'])
 def obtener_paciente():
     json_pacientes = []
@@ -50,16 +52,6 @@ def obtener_paciente():
     for paciente in pacientes:
         json_pacientes.append(paciente.get_json())
     return jsonify(json_pacientes)
-
-@app.route('/login', methods=['GET'])
-def login():
-    nombre_usuario = request.args.get("nombre_usuario")
-    contrasena = request.args.get("contrasena")
-    if not existe_usuario(nombre_usuario):
-        return jsonify({'estado':0,'mensaje':'El Usuario No Existe'})
-    if verificar_contrasena(nombre_usuario, contrasena):
-        return jsonify({'estado':1,'mensaje':'Login Existoso'})
-    return jsonify({'estado':0,'mensaje':'La Contraseña es Incorrecta'})
 
 def existe_usuario(nombre_usuario):
     if nombre_usuario == administrador['nombre_usuario']:
@@ -79,43 +71,7 @@ def verificar_contrasena(nombre_usuario, contrasena):
             return True
     return False
 
-@app.route('/obtener_doctor', methods=['GET'])
-def obtener_doctor():
-    json_doctor = []
-    global enfermeras
-    for enfermera in enfermeras:
-        json_enfermera.append(enfermera.get_json())
-    return jsonify(json_enfermera)
-
-@app.route('/registro_doctor', methods=['POST'])
-def registro_doctor():
-    contenido = request.get_json()
-    nombre = contenido['nombre']
-    apellido = contenido['apellido']
-    fecha_nacimiento = contenido['fecha_nacimiento']
-    sexo = contenido['sexo']
-    nombre_usuario = contenido['nombre_usuario']
-    if (existe_usuario_enfermera(nombre_usuario)):
-        return jsonify({'agregado':0,'mensaje':'El Usuario que DESEA Agregar Ya Existe'})
-    contrasena = contenido['contrasena']
-    telefono = contenido['telefono']
-    enfermera_nueva = Enfermera(nombre,apellido,fecha_nacimiento,sexo,nombre_usuario,contrasena,telefono)
-    global enfermeras
-    enfermeras.append(enfermera_nueva)
-    return jsonify({'agregado':2,'mensaje':'Registro Exitoso'})
-
-
-def existe_usuario_doctor(nombre_usuario):
-    if nombre_usuario == administrador['nombre_usuario']:
-        return True
-    global enfermeras
-    for enfermera in enfermeras:
-        if enfermera.nombre_usuario == nombre_usuario:
-            return True
-    return False
-
-
-
+#---------------------------Enfermera----------------------------------
 @app.route('/obtener_enfermera', methods=['GET'])
 def obtener_enfermera():
     json_enfermera = []
@@ -141,7 +97,6 @@ def registro_enfermera():
     enfermeras.append(enfermera_nueva)
     return jsonify({'agregado':2,'mensaje':'Registro Exitoso'})
 
-
 def existe_usuario_enfermera(nombre_usuario):
     if nombre_usuario == administrador['nombre_usuario']:
         return True
@@ -151,6 +106,82 @@ def existe_usuario_enfermera(nombre_usuario):
             return True
     return False
 
+#---------------------------Doctor----------------------------------
+@app.route('/obtener_doctor', methods=['GET'])
+def obtener_doctor():
+    json_doctor = []
+    global doctores
+    for doctor in doctores:
+        json_doctor.append(doctor.get_json())
+    return jsonify(json_doctor)
+
+@app.route('/registro_doctor', methods=['POST'])
+def registro_doctor():
+    contenido = request.get_json()
+    nombre = contenido['nombre']
+    apellido = contenido['apellido']
+    fecha_nacimiento = contenido['fecha_nacimiento']
+    sexo = contenido['sexo']
+    nombre_usuario = contenido['nombre_usuario']
+    if (existe_usuario_doctor(nombre_usuario)):
+        return jsonify({'agregado':0,'mensaje':'El Usuario que desea Agregar Ya Existe'})
+    contrasena = contenido['contrasena']
+    telefono = contenido['telefono']
+    doctor_nuevo = Doctor(nombre,apellido,fecha_nacimiento,sexo,nombre_usuario,contrasena,telefono)
+    global doctores
+    doctores.append(doctor_nuevo)
+    return jsonify({'agregado':3,'mensaje':'Registro Exitoso'})
+
+def existe_usuario_doctor(nombre_usuario):
+    if nombre_usuario == administrador['nombre_usuario']:
+        return True
+    global doctores
+    for doctor in doctores:
+        if doctor.nombre_usuario == nombre_usuario:
+            return True
+    return False
+
+#---------------------------Medicamento----------------------------------
+@app.route('/obtener_medicamento', methods=['GET'])
+def obtener_medicamento():
+    json_medicamento = []
+    global medicamentos
+    for medicamento in medicamentos:
+        json_medicamento.append(medicamento.get_json())
+    return jsonify(json_medicamento)
+
+@app.route('/registro_medicamento', methods=['POST'])
+def registro_medicamento():
+    contenido = request.get_json()
+    nombre = contenido['nombre']
+    if (existe_medicamento(nombre)):
+            return jsonify({'agregado':0,'mensaje':'El Medicamento que desea Agregar Ya Existe'})
+    precio = contenido['precio']
+    descripcion = contenido['descripcion']
+    cantidad = contenido['cantidad']
+    medicamento_nuevo = Medicamento(nombre, precio, descripcion, cantidad)
+    global medicamentos
+    medicamentos.append(medicamento_nuevo)
+    return jsonify({'agregado':4,'mensaje':'Registro Exitoso'})
+
+def existe_medicamento(nombre):
+    global medicamentos
+    for medicamento in medicamentos:
+        if medicamento.nombre == nombre:
+            return True
+    return False
+
+#---------------------------Login----------------------------------
+
+@app.route('/login', methods=['GET'])
+def login():
+    nombre_usuario = request.args.get("nombre_usuario")
+    contrasena = request.args.get("contrasena")
+    if not existe_usuario(nombre_usuario):
+        return jsonify({'estado':0,'mensaje':'El Usuario No Existe'})
+    if verificar_contrasena(nombre_usuario, contrasena):
+        return jsonify({'estado':1,'mensaje':'Login Existoso'})
+    return jsonify({'estado':0,'mensaje':'La Contraseña es Incorrecta'})
 
 
 if __name__ == '__main__':
