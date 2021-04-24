@@ -195,6 +195,8 @@ def existe_medicamento(nombre):
 def login():
     nombre_usuario = request.args.get("nombre_usuario")
     contrasena = request.args.get("contrasena")
+    if nombre_usuario == administrador['nombre_usuario'] and contrasena == administrador['contrasena']:
+        return jsonify({'estado':4,'mensaje':'Login Exitoso admin'})
     if not existe_usuario(nombre_usuario) and not existe_usuario_enfermera(nombre_usuario) and not existe_usuario_doctor(nombre_usuario):
         return jsonify({'estado':0,'mensaje':'El Usuario No Existe'})
     if verificar_contrasena(nombre_usuario, contrasena):
