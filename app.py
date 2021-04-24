@@ -88,7 +88,7 @@ def obtener_doctor():
     return jsonify(json_enfermera)
 
 @app.route('/registro_doctor', methods=['POST'])
-def registro_enfermera():
+def registro_doctor():
     contenido = request.get_json()
     nombre = contenido['nombre']
     apellido = contenido['apellido']
