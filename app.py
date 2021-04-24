@@ -79,6 +79,42 @@ def verificar_contrasena(nombre_usuario, contrasena):
             return True
     return False
 
+@app.route('/obtener_doctor', methods=['GET'])
+def obtener_doctor():
+    json_doctor = []
+    global enfermeras
+    for enfermera in enfermeras:
+        json_enfermera.append(enfermera.get_json())
+    return jsonify(json_enfermera)
+
+@app.route('/registro_doctor', methods=['POST'])
+def registro_enfermera():
+    contenido = request.get_json()
+    nombre = contenido['nombre']
+    apellido = contenido['apellido']
+    fecha_nacimiento = contenido['fecha_nacimiento']
+    sexo = contenido['sexo']
+    nombre_usuario = contenido['nombre_usuario']
+    if (existe_usuario_enfermera(nombre_usuario)):
+        return jsonify({'agregado':0,'mensaje':'El Usuario que DESEA Agregar Ya Existe'})
+    contrasena = contenido['contrasena']
+    telefono = contenido['telefono']
+    enfermera_nueva = Enfermera(nombre,apellido,fecha_nacimiento,sexo,nombre_usuario,contrasena,telefono)
+    global enfermeras
+    enfermeras.append(enfermera_nueva)
+    return jsonify({'agregado':2,'mensaje':'Registro Exitoso'})
+
+
+def existe_usuario_doctor(nombre_usuario):
+    if nombre_usuario == administrador['nombre_usuario']:
+        return True
+    global enfermeras
+    for enfermera in enfermeras:
+        if enfermera.nombre_usuario == nombre_usuario:
+            return True
+    return False
+
+
 
 @app.route('/obtener_enfermera', methods=['GET'])
 def obtener_enfermera():
@@ -114,6 +150,8 @@ def existe_usuario_enfermera(nombre_usuario):
         if enfermera.nombre_usuario == nombre_usuario:
             return True
     return False
+
+
 
 if __name__ == '__main__':
     puerto = int(os.environ.get('PORT',3000))
