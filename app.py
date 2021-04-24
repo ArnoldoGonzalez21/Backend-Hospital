@@ -195,10 +195,8 @@ def existe_medicamento(nombre):
 def login():
     nombre_usuario = request.args.get("nombre_usuario")
     contrasena = request.args.get("contrasena")
-    if not existe_usuario(nombre_usuario):
-        if not existe_usuario_enfermera(nombre_usuario):
-            if not existe_usuario_doctor(nombre_usuario):
-                return jsonify({'estado':0,'mensaje':'El Usuario No Existe'})
+    if not existe_usuario(nombre_usuario) and not existe_usuario_enfermera(nombre_usuario) and not existe_usuario_doctor(nombre_usuario):
+        return jsonify({'estado':0,'mensaje':'El Usuario No Existe'})
     if verificar_contrasena(nombre_usuario, contrasena):
         return jsonify({'estado':1,'mensaje':'Login Existoso'})
     elif verificar_contrasena_enfermera(nombre_usuario, contrasena):
