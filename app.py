@@ -212,6 +212,28 @@ def existe_medicamento(nombre):
             return True
     return False
 
+@app.route('/eliminar_medicamento', methods=['POST'])
+def eliminar_medicamento():
+    cuerpo = request.get_json()
+    indice = cuerpo['indice']
+    i = int(indice)
+    global medicamentos
+    medicamentos.pop(i)
+    return jsonify({"mensaje":"Eliminado exitosamente"})
+
+@app.route('/editar_medicamento', methods=['POST'])
+def editar_medicamento():
+    cuerpo = request.get_json()
+    indice = cuerpo['indice']
+    nombre = cuerpo['nombre']
+    precio = cuerpo['precio']
+    descripcion = cuerpo['descripcion']
+    cantidad = cuerpo['cantidad']
+    i = int(indice)
+    global medicamentos
+    medicamentos[i].editar_medicamento(nombre, precio, descripcion, cantidad)
+    return jsonify(medicamentos[i].get_json())
+
 #---------------------------Login----------------------------------
 
 @app.route('/login', methods=['GET'])
