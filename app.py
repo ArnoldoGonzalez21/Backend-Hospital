@@ -219,7 +219,7 @@ def eliminar_medicamento():
     i = int(indice)
     global medicamentos
     medicamentos.pop(i)
-    return jsonify({"mensaje":"Eliminado exitosamente"})
+    return jsonify({"mensaje":"Medicamento Eliminado exitosamente"})
 
 @app.route('/editar_medicamento', methods=['POST'])
 def editar_medicamento():
