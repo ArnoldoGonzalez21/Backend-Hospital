@@ -78,6 +78,25 @@ def verificar_contrasena(nombre_usuario, contrasena):
             return True
     return False
 
+@app.route('/editar_paciente', methods=['POST'])
+def editar_paciente():
+    contenido = request.get_json()
+    indice = contenido['indice']
+    nombre = contenido['nombre']
+    apellido = contenido['apellido']
+    fecha_nacimiento = contenido['fecha_nacimiento']
+    sexo = contenido['sexo']
+    nombre_usuario = contenido['nombre_usuario']
+    if (existe_usuario(nombre_usuario)):
+        return jsonify({'agregado':0,'mensaje':'El Nombre de Usuario que desea Agregar Ya Existe'})
+    contrasena = contenido['contrasena']
+    telefono = contenido['telefono']
+    i = int(indice)
+    global pacientes
+    pacientes[i].modificar_perfil(nombre, apellido, fecha_nacimiento, sexo, nombre_usuario, contrasena, telefono)
+    return jsonify(pacientes[i].get_json())
+
+
 #---------------------------Enfermera----------------------------------
 @app.route('/obtener_enfermera', methods=['GET'])
 def obtener_enfermera():
