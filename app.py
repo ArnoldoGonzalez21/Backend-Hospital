@@ -96,7 +96,6 @@ def editar_paciente():
     pacientes[i].modificar_perfil(nombre, apellido, fecha_nacimiento, sexo, nombre_usuario, contrasena, telefono)
     return jsonify(pacientes[i].get_json())
 
-
 #---------------------------Enfermera----------------------------------
 @app.route('/obtener_enfermera', methods=['GET'])
 def obtener_enfermera():
@@ -149,6 +148,24 @@ def verificar_contrasena_enfermera(nombre_usuario, contrasena):
             return True
     return False
 
+@app.route('/editar_enfermera', methods=['POST'])
+def editar_enfermera():
+    contenido = request.get_json()
+    indice = contenido['indice']
+    nombre = contenido['nombre']
+    apellido = contenido['apellido']
+    fecha_nacimiento = contenido['fecha_nacimiento']
+    sexo = contenido['sexo']
+    nombre_usuario = contenido['nombre_usuario']
+    if (existe_usuario_enfermera(nombre_usuario)):
+        return jsonify({'agregado':0,'mensaje':'El Nombre de Usuario que desea Agregar Ya Existe'})
+    contrasena = contenido['contrasena']
+    telefono = contenido['telefono']
+    i = int(indice)
+    global enfermeras
+    enfermeras[i].modificar_perfil(nombre, apellido, fecha_nacimiento, sexo, nombre_usuario, contrasena, telefono)
+    return jsonify(enfermeras[i].get_json())
+
 #---------------------------Doctor----------------------------------
 @app.route('/obtener_doctor', methods=['GET'])
 def obtener_doctor():
@@ -200,6 +217,24 @@ def verificar_contrasena_doctor(nombre_usuario, contrasena):
         if doctor.nombre_usuario == nombre_usuario and doctor.contrasena == contrasena:
             return True
     return False
+
+@app.route('/editar_doctor', methods=['POST'])
+def editar_doctor():
+    contenido = request.get_json()
+    indice = contenido['indice']
+    nombre = contenido['nombre']
+    apellido = contenido['apellido']
+    fecha_nacimiento = contenido['fecha_nacimiento']
+    sexo = contenido['sexo']
+    nombre_usuario = contenido['nombre_usuario']
+    if (existe_usuario_doctor(nombre_usuario)):
+        return jsonify({'agregado':0,'mensaje':'El Nombre de Usuario que desea Agregar Ya Existe'})
+    contrasena = contenido['contrasena']
+    telefono = contenido['telefono']
+    i = int(indice)
+    global doctores
+    doctores[i].modificar_perfil(nombre, apellido, fecha_nacimiento, sexo, nombre_usuario, contrasena, telefono)
+    return jsonify(doctores[i].get_json())
 
 #---------------------------Medicamento----------------------------------
 @app.route('/obtener_medicamento', methods=['GET'])
