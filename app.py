@@ -96,6 +96,16 @@ def editar_paciente():
     pacientes[i].modificar_perfil(nombre, apellido, fecha_nacimiento, sexo, nombre_usuario, contrasena, telefono)
     return jsonify(pacientes[i].get_json())
 
+@app.route('/eliminar_paciente', methods=['POST'])
+def eliminar_paciente():
+    cuerpo = request.get_json()
+    indice = cuerpo['indice']
+    i = int(indice)
+    global pacientes
+    pacientes.pop(i)
+    return jsonify({"mensaje":"Paciente Eliminado exitosamente"})
+
+
 #---------------------------Enfermera----------------------------------
 @app.route('/obtener_enfermera', methods=['GET'])
 def obtener_enfermera():
@@ -166,6 +176,16 @@ def editar_enfermera():
     enfermeras[i].modificar_perfil(nombre, apellido, fecha_nacimiento, sexo, nombre_usuario, contrasena, telefono)
     return jsonify(enfermeras[i].get_json())
 
+@app.route('/eliminar_enfermera', methods=['POST'])
+def eliminar_enfermera():
+    cuerpo = request.get_json()
+    indice = cuerpo['indice']
+    i = int(indice)
+    global enfermeras
+    enfermeras.pop(i)
+    return jsonify({"mensaje":"Enfermera Eliminada exitosamente"})
+
+
 #---------------------------Doctor----------------------------------
 @app.route('/obtener_doctor', methods=['GET'])
 def obtener_doctor():
@@ -235,6 +255,16 @@ def editar_doctor():
     global doctores
     doctores[i].modificar_perfil(nombre, apellido, fecha_nacimiento, sexo, nombre_usuario, contrasena, telefono)
     return jsonify(doctores[i].get_json())
+
+@app.route('/eliminar_doctor', methods=['POST'])
+def eliminar_doctor():
+    cuerpo = request.get_json()
+    indice = cuerpo['indice']
+    i = int(indice)
+    global doctores
+    doctores.pop(i)
+    return jsonify({"mensaje":"Doctor Eliminado exitosamente"})
+
 
 #---------------------------Medicamento----------------------------------
 @app.route('/obtener_medicamento', methods=['GET'])
