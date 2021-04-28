@@ -138,11 +138,15 @@ def solicitar_cita():
 @app.route('/respoder_cita', methods=['POST'])
 def responder_cita():
     contenido = request.get_json()
-    indice = contenido['indice'] #posicion
-    i = int(indice)
-    estadoCita = contenido['estado']
+    posicion = contenido['posicion'] #posicion
+    i = int(posicion)
+    indice = contenido['indice']
+    fecha = contenido['fecha']
+    hora = contenido['hora']
+    motivo = contenido['motivo']
+    estado = contenido['estado']
     global citas
-    citas[i].estado = estadoCita
+    citas[i].cambiar_estado_cita(indice, fecha, hora, motivo, estado)
     return jsonify({'agregado':7,'mensaje':'Estado de la Cita Cambiado Exitosamente'})
 
 def existe_cita(indice):
