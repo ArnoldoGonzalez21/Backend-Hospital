@@ -105,7 +105,7 @@ def eliminar_paciente():
     i = int(indice)
     global pacientes
     pacientes.pop(i)
-    return jsonify({"mensaje":"Paciente Eliminado exitosamente"})
+    return jsonify({"mensaje":"Paciente Eliminado Exitosamente"})
 
 #---------------------------Cita----------------------------------
 
@@ -134,6 +134,16 @@ def solicitar_cita():
     citas.append(cita_nueva)
     pacientes[i].estado = True
     return jsonify({'agregado':5,'mensaje':'Cita Agregada Exitosamente'})
+
+@app.route('/respoder_cita', methods=['POST'])
+def responder_cita():
+    contenido = request.get_json()
+    indice = contenido['indice'] #posicion
+    i = int(indice)
+    estadoCita = contenido['estado']
+    global citas
+    citas[i].estado = estadoCita
+    return jsonify({'agregado':7,'mensaje':'Estado de la Cita Cambiado Exitosamente'})
 
 def existe_cita(indice):
     global pacientes
