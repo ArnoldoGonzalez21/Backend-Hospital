@@ -135,7 +135,7 @@ def solicitar_cita():
     pacientes[i].estado = True
     return jsonify({'agregado':5,'mensaje':'Cita Agregada Exitosamente'})
 
-@app.route('/respoder_cita', methods=['POST'])
+@app.route('/responder_cita', methods=['POST'])
 def responder_cita():
     contenido = request.get_json()
     posicion = contenido['posicion'] #posicion
