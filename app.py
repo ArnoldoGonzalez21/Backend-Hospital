@@ -118,8 +118,8 @@ def obtener_cita():
 
 #---------------------------Cita----------------------------------
 
-@app.route('/soliciar_cita', methods=['POST'])
-def soliciar_cita():
+@app.route('/solicitar_cita', methods=['POST'])
+def solicitar_cita():
     contenido = request.get_json()
     indice = contenido['indice']
     i = int(indice)
