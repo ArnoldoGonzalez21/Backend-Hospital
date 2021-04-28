@@ -107,6 +107,8 @@ def eliminar_paciente():
     pacientes.pop(i)
     return jsonify({"mensaje":"Paciente Eliminado exitosamente"})
 
+#---------------------------Cita----------------------------------
+
 @app.route('/obtener_cita', methods=['GET'])
 def obtener_cita():
     json_citas = []
@@ -114,9 +116,6 @@ def obtener_cita():
     for cita in citas:
         json_citas.append(cita.get_json())
     return jsonify(json_citas)
-
-
-#---------------------------Cita----------------------------------
 
 @app.route('/solicitar_cita', methods=['POST'])
 def solicitar_cita():
@@ -128,7 +127,8 @@ def solicitar_cita():
     fecha = contenido['fecha']
     hora = contenido['hora']
     motivo = contenido['motivo']
-    cita_nueva = Cita(i, fecha, hora, motivo)
+    estado = contenido['estado']
+    cita_nueva = Cita(i, fecha, hora, motivo, estado)
     global citas
     global pacientes
     citas.append(cita_nueva)
@@ -141,8 +141,8 @@ def existe_cita(indice):
         return True;
     return False
 
-
 #---------------------------Enfermera----------------------------------
+
 @app.route('/obtener_enfermera', methods=['GET'])
 def obtener_enfermera():
     json_enfermera = []
