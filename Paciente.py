@@ -1,5 +1,5 @@
 class Paciente():
-    def __init__(self,nombre,apellido,fecha_nacimiento,sexo,nombre_usuario,contrasena,telefono):
+    def __init__(self,nombre,apellido,fecha_nacimiento,sexo,nombre_usuario,contrasena,telefono,estado):
         self.nombre = nombre
         self.apellido = apellido
         self.fecha_nacimiento = fecha_nacimiento
@@ -7,6 +7,7 @@ class Paciente():
         self.nombre_usuario = nombre_usuario
         self.contrasena = contrasena
         self.telefono = telefono
+        self.estado = estado
     
     def get_json(self):
         return{
@@ -26,4 +27,4 @@ class Paciente():
         self.sexo = sexo 
         self.nombre_usuario = nombre_usuario
         self.contrasena = contrasena
-        self.telefono = telefono
+        self.telefono = telefono 

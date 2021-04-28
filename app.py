@@ -7,6 +7,7 @@ from Paciente import Paciente
 from Enfermera import Enfermera
 from Doctor import Doctor
 from Medicamento import Medicamento
+from Cita import Cita
 
 app = Flask(__name__)
 CORS(app)
@@ -22,6 +23,7 @@ pacientes = []
 enfermeras = []
 doctores = []
 medicamentos = []
+citas = []
 
 @app.route('/', methods=['GET'])
 def principal():
@@ -40,7 +42,7 @@ def registro_paciente():
         return jsonify({'agregado':0,'mensaje':'El Usuario que desea Agregar Ya Existe'})
     contrasena = contenido['contrasena']
     telefono = contenido['telefono']
-    paciente_nuevo = Paciente(nombre,apellido,fecha_nacimiento,sexo,nombre_usuario,contrasena,telefono)
+    paciente_nuevo = Paciente(nombre,apellido,fecha_nacimiento,sexo,nombre_usuario,contrasena,telefono,False)
     global pacientes
     pacientes.append(paciente_nuevo)
     return jsonify({'agregado':1,'mensaje':'Registro Exitoso'})
@@ -104,6 +106,31 @@ def eliminar_paciente():
     global pacientes
     pacientes.pop(i)
     return jsonify({"mensaje":"Paciente Eliminado exitosamente"})
+
+#---------------------------Cita----------------------------------
+
+@app.route('/soliciar_cita', methods=['POST'])
+def soliciar_cita():
+    contenido = request.get_json()
+    indice = contenido['indice']
+    i = int(indice)
+    if (existe_cita(i)):
+        return jsonify({'agregado':6,'mensaje':'El Paciente tiene una Cita Pendiente'})
+    fecha = contenido['fecha']
+    hora = contenido['hora']
+    motivo = contenido['motivo']
+    cita_nueva = Cita(i, fecha, hora, motivo)
+    global citas
+    global pacientes
+    citas.append(cita_nueva)
+    pacientes[i].estado = True
+    return jsonify({'agregado':5,'mensaje':'Cita Agregada Exitosamente'})
+
+def existe_cita(indice):
+    global pacientes
+    if pacientes[indice].estado:
+        return True;
+    return False
 
 
 #---------------------------Enfermera----------------------------------
