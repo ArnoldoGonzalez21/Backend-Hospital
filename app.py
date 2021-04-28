@@ -107,6 +107,15 @@ def eliminar_paciente():
     pacientes.pop(i)
     return jsonify({"mensaje":"Paciente Eliminado exitosamente"})
 
+@app.route('/obtener_cita', methods=['GET'])
+def obtener_cita():
+    json_citas = []
+    global citas
+    for cita in citas:
+        json_citas.append(cita.get_json())
+    return jsonify(json_citas)
+
+
 #---------------------------Cita----------------------------------
 
 @app.route('/soliciar_cita', methods=['POST'])
