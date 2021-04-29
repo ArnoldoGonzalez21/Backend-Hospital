@@ -128,7 +128,7 @@ def solicitar_cita():
     hora = contenido['hora']
     motivo = contenido['motivo']
     estado = contenido['estado']
-    cita_nueva = Cita(i, fecha, hora, motivo, estado)
+    cita_nueva = Cita(i, fecha, hora, motivo, estado,-1)
     global citas
     global pacientes
     citas.append(cita_nueva)
