@@ -1,10 +1,11 @@
 class Cita():
-    def __init__(self,indice,fecha,hora,motivo,estado):
+    def __init__(self,indice,fecha,hora,motivo,estado,doctor):
         self.indice = indice
         self.fecha = fecha
         self.hora = hora
         self.motivo = motivo 
         self.estado = estado
+        self.doctor = doctor
     
     def get_json(self):
         return{
@@ -12,7 +13,8 @@ class Cita():
             "fecha":self.fecha,
             "hora":self.hora,
             "motivo":self.motivo,
-            "estado":self.estado
+            "estado":self.estado,
+            "doctor":self.doctor
         }    
 
     def solicitar_cita(self,indice,fecha,hora,motivo,estado):
@@ -28,6 +30,11 @@ class Cita():
         self.hora = hora
         self.motivo = motivo 
         self.estado = estado
+    
+    def asignar_doctor(self,indice,doctor):
+        self.indice = indice
+        self.doctor = doctor
+        
 
 
 #pendiente = 0

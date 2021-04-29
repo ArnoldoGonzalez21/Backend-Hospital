@@ -149,6 +149,18 @@ def responder_cita():
     citas[i].cambiar_estado_cita(indice, fecha, hora, motivo, estado)
     return jsonify({'agregado':7,'mensaje':'Estado de la Cita Cambiado Exitosamente'})
 
+@app.route('/asignar_doctor', methods=['POST'])
+def asignar_doctor():
+    contenido = request.get_json()
+    posicion = contenido['posicion'] #posicion
+    i = int(posicion)
+    indice = contenido['indice']
+    doctor = contenido['doctor'] #posicion del doctor
+    global citas
+    citas[i].asignar_doctor(indice, doctor)
+    return jsonify({'agregado':8,'mensaje':'Médico Asignado Exitosamente'})
+
+
 def existe_cita(indice):
     global pacientes
     if pacientes[indice].estado:
