@@ -24,11 +24,8 @@ class Cita():
         self.motivo = motivo 
         self.estado = estado
         
-    def cambiar_estado_cita(self,indice,fecha,hora,motivo,estado):
+    def cambiar_estado_cita(self,indice,estado):
         self.indice = indice
-        self.fecha = fecha
-        self.hora = hora
-        self.motivo = motivo 
         self.estado = estado
     
     def asignar_doctor(self,indice,doctor):
