@@ -391,7 +391,7 @@ def registro_medicamento():
     precio = contenido['precio']
     descripcion = contenido['descripcion']
     cantidad = contenido['cantidad']
-    medicamento_nuevo = Medicamento(nombre, precio, descripcion, cantidad)
+    medicamento_nuevo = Medicamento(nombre, precio, descripcion, cantidad,0)
     global medicamentos
     medicamentos.append(medicamento_nuevo)
     return jsonify({'agregado':4,'mensaje':'Registro Exitoso'})
