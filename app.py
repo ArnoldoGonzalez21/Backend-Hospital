@@ -9,6 +9,7 @@ from Doctor import Doctor
 from Medicamento import Medicamento
 from Cita import Cita
 from Factura import Factura
+from Receta import Receta
 
 app = Flask(__name__)
 CORS(app)
@@ -26,6 +27,7 @@ doctores = []
 medicamentos = []
 citas = []
 facturas = []
+recetas = []
 
 @app.route('/', methods=['GET'])
 def principal():
@@ -188,6 +190,27 @@ def generar_factura():
     facturas.append(factura_nueva)
     return jsonify({'agregado':9,'mensaje':'Factura Agregada Exitosamente'})
 
+#---------------------------Receta----------------------------------
+
+@app.route('/obtener_receta', methods=['GET'])
+def obtener_teceta():
+    json_facturas = []
+    global facturas
+    for factura in facturas:
+        json_facturas.append(factura.get_json())
+    return jsonify(json_facturas)
+
+@app.route('/crear_receta', methods=['POST'])
+def crear_receta():
+    contenido = request.get_json()
+    fecha = contenido['fecha']
+    paciente = contenido['paciente']
+    padecimiento = contenido['padecimiento']
+    descripcion = contenido['descripcion']
+    receta_nueva = Receta(fecha, paciente, padecimiento, descripcion)
+    global recetas
+    recetas.append(receta_nueva)
+    return jsonify({'agregado':10,'mensaje':'Receta Agregada Exitosamente'})
 
 #---------------------------Enfermera----------------------------------
 
