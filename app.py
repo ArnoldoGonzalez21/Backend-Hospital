@@ -193,12 +193,12 @@ def generar_factura():
 #---------------------------Receta----------------------------------
 
 @app.route('/obtener_receta', methods=['GET'])
-def obtener_teceta():
-    json_facturas = []
-    global facturas
-    for factura in facturas:
-        json_facturas.append(factura.get_json())
-    return jsonify(json_facturas)
+def obtener_receta():
+    json_recetas = []
+    global recetas
+    for receta in recetas:
+        json_recetas.append(receta.get_json())
+    return jsonify(json_recetas)
 
 @app.route('/crear_receta', methods=['POST'])
 def crear_receta():
