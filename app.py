@@ -8,6 +8,7 @@ from Enfermera import Enfermera
 from Doctor import Doctor
 from Medicamento import Medicamento
 from Cita import Cita
+from Factura import Factura
 
 app = Flask(__name__)
 CORS(app)
@@ -24,6 +25,7 @@ enfermeras = []
 doctores = []
 medicamentos = []
 citas = []
+facturas = []
 
 @app.route('/', methods=['GET'])
 def principal():
@@ -163,6 +165,29 @@ def existe_cita(indice):
     if pacientes[indice].estado:
         return True;
     return False
+
+#---------------------------Factura----------------------------------
+
+@app.route('/obtener_factura', methods=['GET'])
+def obtener_factura():
+    json_facturas = []
+    global facturas
+    for factura in facturas:
+        json_facturas.append(factura.get_json())
+    return jsonify(json_facturas)
+
+@app.route('/generar_factura', methods=['POST'])
+def generar_factura():
+    contenido = request.get_json()
+    fecha = contenido['fecha']
+    paciente = contenido['paciente']
+    doctor = contenido['doctor']
+    total = contenido['total']
+    factura_nueva = Factura(fecha, paciente, doctor, total)
+    global facturas
+    facturas.append(factura_nueva)
+    return jsonify({'agregado':9,'mensaje':'Factura Agregada Exitosamente'})
+
 
 #---------------------------Enfermera----------------------------------
 
