@@ -19,4 +19,7 @@ class Medicamento():
         self.nombre = nombre
         self.precio = precio
         self.descripcion = descripcion
-        self.cantidad = cantidad   
+        self.cantidad = cantidad
+    
+    def agregar_venta(self, venta):
+        self.venta = venta       

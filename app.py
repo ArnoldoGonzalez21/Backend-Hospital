@@ -425,6 +425,16 @@ def editar_medicamento():
     medicamentos[i].editar_medicamento(nombre, precio, descripcion, cantidad)
     return jsonify(medicamentos[i].get_json())
 
+@app.route('/agregar_venta_medicamento', methods=['POST'])
+def agregar_venta_medicamento():
+    cuerpo = request.get_json()
+    posicion = cuerpo['posicion']
+    venta = cuerpo['venta']
+    i = int(posicion)
+    global medicamentos
+    medicamentos[i].agregar_venta(venta)
+    return jsonify(medicamentos[i].get_json())
+
 #---------------------------Login----------------------------------
 
 @app.route('/login', methods=['GET'])
