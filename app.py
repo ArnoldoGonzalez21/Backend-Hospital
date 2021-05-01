@@ -149,7 +149,7 @@ def responder_cita():
     global citas
     global pacientes
     j = int(indice)
-    if estado == '2' or estado == '3':
+    if estado == 2 or estado == 3:
         pacientes[j].estado = False
     citas[i].cambiar_estado_cita(indice, estado)
     return jsonify({'agregado':7,'mensaje':'Estado de la Cita Cambiado Exitosamente'})
