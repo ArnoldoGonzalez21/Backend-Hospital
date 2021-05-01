@@ -436,6 +436,18 @@ def agregar_venta_medicamento():
     medicamentos[i].agregar_venta(venta, paciente)
     return jsonify(medicamentos[i].get_json())
 
+@app.route('/eliminar_medicamento_pedido', methods=['POST'])
+def eliminar_medicamento_pedido():
+    cuerpo = request.get_json()
+    indice = cuerpo['indice']
+    venta = cuerpo['venta']
+    paciente = cuerpo['paciente']
+    i = int(indice)
+    global medicamentos
+    medicamentos[i].agregar_venta(venta, paciente)
+    return jsonify({"mensaje":"Medicamento Eliminado Exitosamente"})
+
+
 #---------------------------Login----------------------------------
 
 @app.route('/login', methods=['GET'])
