@@ -444,7 +444,8 @@ def eliminar_medicamento_pedido():
     paciente = cuerpo['paciente']
     i = int(indice)
     global medicamentos
-    medicamentos[i].agregar_venta(venta, paciente)
+    quitar_venta = int(medicamentos[i].venta) - int(venta)
+    medicamentos[i].agregar_venta(quitar_venta, paciente)
     return jsonify({"mensaje":"Medicamento Eliminado Exitosamente"})
 
 
