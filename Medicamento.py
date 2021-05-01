@@ -1,10 +1,11 @@
 class Medicamento():
-    def __init__(self,nombre,precio,descripcion,cantidad,venta):
+    def __init__(self,nombre,precio,descripcion,cantidad,venta,paciente):
         self.nombre = nombre
         self.precio = precio
         self.descripcion = descripcion
         self.cantidad = cantidad
-        self.venta = venta 
+        self.venta = venta
+        self.paciente = paciente 
         
     def get_json(self):
         return{
@@ -12,7 +13,8 @@ class Medicamento():
             "precio":self.precio,
             "descripcion":self.descripcion,
             "cantidad":self.cantidad,
-            "venta":self.venta
+            "venta":self.venta,
+            "paciente":self.paciente
         }
            
     def editar_medicamento(self, nombre, precio, descripcion, cantidad):
@@ -21,5 +23,6 @@ class Medicamento():
         self.descripcion = descripcion
         self.cantidad = cantidad
     
-    def agregar_venta(self, venta):
-        self.venta = venta       
+    def agregar_venta(self, venta, paciente):
+        self.venta = venta 
+        self.paciente = paciente      

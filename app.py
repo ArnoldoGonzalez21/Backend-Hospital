@@ -391,7 +391,7 @@ def registro_medicamento():
     precio = contenido['precio']
     descripcion = contenido['descripcion']
     cantidad = contenido['cantidad']
-    medicamento_nuevo = Medicamento(nombre, precio, descripcion, cantidad,0)
+    medicamento_nuevo = Medicamento(nombre, precio, descripcion, cantidad, 0, -1)
     global medicamentos
     medicamentos.append(medicamento_nuevo)
     return jsonify({'agregado':4,'mensaje':'Registro Exitoso'})
@@ -430,9 +430,10 @@ def agregar_venta_medicamento():
     cuerpo = request.get_json()
     posicion = cuerpo['posicion']
     venta = cuerpo['venta']
+    paciente = cuerpo['paciente']
     i = int(posicion)
     global medicamentos
-    medicamentos[i].agregar_venta(venta)
+    medicamentos[i].agregar_venta(venta, paciente)
     return jsonify(medicamentos[i].get_json())
 
 #---------------------------Login----------------------------------
