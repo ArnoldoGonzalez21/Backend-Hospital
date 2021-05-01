@@ -147,6 +147,10 @@ def responder_cita():
     indice = contenido['indice']
     estado = contenido['estado']
     global citas
+    global pacientes
+    j = int(indice)
+    if j == 2 or j == 3:
+        pacientes[j].estaod = False
     citas[i].cambiar_estado_cita(indice, estado)
     return jsonify({'agregado':7,'mensaje':'Estado de la Cita Cambiado Exitosamente'})
 
@@ -160,7 +164,6 @@ def asignar_doctor():
     global citas
     citas[i].asignar_doctor(indice, doctor)
     return jsonify({'agregado':8,'mensaje':'Médico Asignado Exitosamente'})
-
 
 def existe_cita(indice):
     global pacientes
