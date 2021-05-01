@@ -17,7 +17,8 @@ class Paciente():
             "sexo":self.sexo,
             "nombre_usuario":self.nombre_usuario,
             "contrasena":self.contrasena,
-            "telefono":self.telefono  
+            "telefono":self.telefono,
+            "estado":self.estado   
         }
     
     def modificar_perfil(self,nombre,apellido,fecha_nacimiento,sexo,nombre_usuario,contrasena,telefono):
