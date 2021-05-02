@@ -316,8 +316,9 @@ def registro_doctor():
     if (existe_usuario_doctor(nombre_usuario)):
         return jsonify({'agregado':0,'mensaje':'El Usuario que desea Agregar Ya Existe'})
     contrasena = contenido['contrasena']
+    especialidad = contenido['especialidad']
     telefono = contenido['telefono']
-    doctor_nuevo = Doctor(nombre,apellido,fecha_nacimiento,sexo,nombre_usuario,contrasena,telefono)
+    doctor_nuevo = Doctor(nombre,apellido,fecha_nacimiento,sexo,nombre_usuario,contrasena,especialidad,telefono)
     global doctores
     doctores.append(doctor_nuevo)
     return jsonify({'agregado':3,'mensaje':'Registro Exitoso'})
@@ -360,10 +361,11 @@ def editar_doctor():
     if (existe_usuario_doctor(nombre_usuario)):
         return jsonify({'agregado':0,'mensaje':'El Nombre de Usuario que desea Agregar Ya Existe'})
     contrasena = contenido['contrasena']
+    especialidad = contenido['especialidad']
     telefono = contenido['telefono']
     i = int(indice)
     global doctores
-    doctores[i].modificar_perfil(nombre, apellido, fecha_nacimiento, sexo, nombre_usuario, contrasena, telefono)
+    doctores[i].modificar_perfil(nombre, apellido, fecha_nacimiento, sexo, nombre_usuario, contrasena, especialidad, telefono)
     return jsonify(doctores[i].get_json())
 
 @app.route('/eliminar_doctor', methods=['POST'])
