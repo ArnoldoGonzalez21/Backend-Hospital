@@ -215,10 +215,20 @@ def crear_receta():
     paciente = contenido['paciente']
     padecimiento = contenido['padecimiento']
     descripcion = contenido['descripcion']
-    receta_nueva = Receta(fecha, paciente, padecimiento, descripcion)
+    cantidad = contenido['cantidad']
+    if(existe_padecimiento(padecimiento)):
+        nueva_cantidad = cantidad + 1
+    receta_nueva = Receta(fecha, paciente, padecimiento, descripcion,nueva_cantidad)
     global recetas
     recetas.append(receta_nueva)
     return jsonify({'agregado':10,'mensaje':'Receta Agregada Exitosamente'})
+
+def existe_padecimiento(padecimiento):
+    global recetas
+    for receta in recetas:
+        if receta.padecimiento == padecimiento:
+            return True
+
 
 #---------------------------Enfermera----------------------------------
 
