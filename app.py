@@ -31,9 +31,10 @@ recetas = []
 
 @app.route('/', methods=['GET'])
 def principal():
-    return 'Por fin'
+    return 'Arnoldo Luis Antonio González Camey   201701548'
 
 #---------------------------Paciente----------------------------------
+
 @app.route('/registro_paciente', methods=['POST'])
 def registro_paciente():
     contenido = request.get_json()
@@ -295,8 +296,8 @@ def eliminar_enfermera():
     enfermeras.pop(i)
     return jsonify({"mensaje":"Enfermera Eliminada exitosamente"})
 
-
 #---------------------------Doctor----------------------------------
+
 @app.route('/obtener_doctor', methods=['GET'])
 def obtener_doctor():
     json_doctor = []
@@ -377,8 +378,8 @@ def eliminar_doctor():
     doctores.pop(i)
     return jsonify({"mensaje":"Doctor Eliminado exitosamente"})
 
-
 #---------------------------Medicamento----------------------------------
+
 @app.route('/obtener_medicamento', methods=['GET'])
 def obtener_medicamento():
     json_medicamento = []
@@ -438,7 +439,8 @@ def agregar_venta_medicamento():
     paciente = cuerpo['paciente']
     i = int(posicion)
     global medicamentos
-    medicamentos[i].agregar_venta(venta, paciente)
+    agregar_venta = int(medicamentos[i].venta) + int(venta)
+    medicamentos[i].agregar_venta(agregar_venta, paciente)
     return jsonify(medicamentos[i].get_json())
 
 @app.route('/eliminar_medicamento_pedido', methods=['POST'])
@@ -452,7 +454,6 @@ def eliminar_medicamento_pedido():
     quitar_venta = int(medicamentos[i].venta) - int(venta)
     medicamentos[i].agregar_venta(quitar_venta, paciente)
     return jsonify({"mensaje":"Medicamento Eliminado Exitosamente"})
-
 
 #---------------------------Login----------------------------------
 
@@ -471,7 +472,6 @@ def login():
     elif verificar_contrasena_doctor(nombre_usuario, contrasena):
         return jsonify({'estado':3,'mensaje':'Login Existoso Doctor'})
     return jsonify({'estado':0,'mensaje':'La Contraseña es Incorrecta'})
-
 
 if __name__ == '__main__':
     puerto = int(os.environ.get('PORT',3000))
