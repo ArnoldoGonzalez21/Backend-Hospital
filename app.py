@@ -210,24 +210,28 @@ def obtener_receta():
 
 @app.route('/crear_receta', methods=['POST'])
 def crear_receta():
+    nueva_cantidad = 1
+    global recetas
     contenido = request.get_json()
     fecha = contenido['fecha']
     paciente = contenido['paciente']
     padecimiento = contenido['padecimiento']
     descripcion = contenido['descripcion']
-    cantidad = contenido['cantidad']
-    if(existe_padecimiento(padecimiento)):
-        nueva_cantidad = cantidad + 1
-    receta_nueva = Receta(fecha, paciente, padecimiento, descripcion,nueva_cantidad)
-    global recetas
+    if(existe_padecimiento(padecimiento) != 0):
+        posicion = existe_padecimiento(padecimiento)
+        nueva_cantidad = recetas[posicion].cantidad + 1
+    receta_nueva = Receta(fecha, paciente, padecimiento, descripcion, nueva_cantidad)
     recetas.append(receta_nueva)
     return jsonify({'agregado':10,'mensaje':'Receta Agregada Exitosamente'})
 
 def existe_padecimiento(padecimiento):
     global recetas
+    contador = 0
     for receta in recetas:
+        contador = contador + 1
         if receta.padecimiento == padecimiento:
-            return True
+            return contador
+    return 0    
 
 
 #---------------------------Enfermera----------------------------------

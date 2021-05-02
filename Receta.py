@@ -11,5 +11,6 @@ class Receta():
             "fecha":self.fecha,
             "paciente":self.paciente,
             "padecimiento":self.padecimiento,
-            "descripcion":self.descripcion
+            "descripcion":self.descripcion,
+            "cantidad":self.cantidad            
         }
