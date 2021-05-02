@@ -323,7 +323,7 @@ def registro_doctor():
     contrasena = contenido['contrasena']
     especialidad = contenido['especialidad']
     telefono = contenido['telefono']
-    doctor_nuevo = Doctor(nombre,apellido,fecha_nacimiento,sexo,nombre_usuario,contrasena,especialidad,telefono)
+    doctor_nuevo = Doctor(nombre,apellido,fecha_nacimiento,sexo,nombre_usuario,contrasena,especialidad,telefono,0)
     global doctores
     doctores.append(doctor_nuevo)
     return jsonify({'agregado':3,'mensaje':'Registro Exitoso'})
