@@ -162,7 +162,11 @@ def asignar_doctor():
     i = int(posicion)
     indice = contenido['indice']
     doctor = contenido['doctor'] #posicion del doctor
+    j = int(doctor)
     global citas
+    global doctores
+    agregar_cita = int(doctores[j].citas) + 1
+    doctores[j].citas = agregar_cita
     citas[i].asignar_doctor(indice, doctor)
     return jsonify({'agregado':8,'mensaje':'Médico Asignado Exitosamente'})
 

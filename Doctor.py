@@ -1,5 +1,5 @@
 class Doctor():
-    def __init__(self,nombre,apellido,fecha_nacimiento,sexo,nombre_usuario,contrasena,especialidad,telefono):
+    def __init__(self,nombre,apellido,fecha_nacimiento,sexo,nombre_usuario,contrasena,especialidad,telefono,citas):
         self.nombre = nombre
         self.apellido = apellido
         self.fecha_nacimiento = fecha_nacimiento
@@ -8,6 +8,7 @@ class Doctor():
         self.contrasena = contrasena
         self.especialidad = especialidad
         self.telefono = telefono
+        self.citas = citas
         
     def get_json(self):
         return{
@@ -18,7 +19,8 @@ class Doctor():
             "nombre_usuario":self.nombre_usuario,
             "contrasena":self.contrasena,
             "especialidad":self.especialidad,
-            "telefono":self.telefono  
+            "telefono":self.telefono,
+            "citas":self.citas  
         }    
         
     def modificar_perfil(self,nombre,apellido,fecha_nacimiento,sexo,nombre_usuario,contrasena,especialidad,telefono):
