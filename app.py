@@ -217,8 +217,8 @@ def crear_receta():
     paciente = contenido['paciente']
     padecimiento = contenido['padecimiento']
     descripcion = contenido['descripcion']
-    if(existe_padecimiento(padecimiento) != 0):
-        posicion = existe_padecimiento(padecimiento)
+    posicion = existe_padecimiento(padecimiento)
+    if(posicion != -1):
         nueva_cantidad = recetas[posicion].cantidad + 1
     receta_nueva = Receta(fecha, paciente, padecimiento, descripcion, nueva_cantidad)
     recetas.append(receta_nueva)
@@ -231,7 +231,7 @@ def existe_padecimiento(padecimiento):
         contador = contador + 1
         if receta.padecimiento == padecimiento:
             return contador
-    return 0    
+    return -1    
 
 
 #---------------------------Enfermera----------------------------------
