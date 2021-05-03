@@ -75,6 +75,7 @@ def existe_usuario(nombre_usuario):
     for doctor in doctores:
         if doctor.nombre_usuario == nombre_usuario:
             return True
+    return False    
 
 def verificar_contrasena(nombre_usuario, contrasena):
     if nombre_usuario == administrador['nombre_usuario'] and contrasena == administrador['contrasena']:
@@ -252,7 +253,7 @@ def registro_enfermera():
     fecha_nacimiento = contenido['fecha_nacimiento']
     sexo = contenido['sexo']
     nombre_usuario = contenido['nombre_usuario']
-    if (existe_usuario_enfermera(nombre_usuario)):
+    if (existe_usuario(nombre_usuario)):
         return jsonify({'agregado':0,'mensaje':'El Usuario que DESEA Agregar Ya Existe'})
     contrasena = contenido['contrasena']
     telefono = contenido['telefono']
@@ -260,23 +261,6 @@ def registro_enfermera():
     global enfermeras
     enfermeras.append(enfermera_nueva)
     return jsonify({'agregado':2,'mensaje':'Registro Exitoso'})
-
-def existe_usuario_enfermera(nombre_usuario):
-    if nombre_usuario == administrador['nombre_usuario']:
-        return True
-    global enfermeras
-    global doctores
-    global pacientes
-    for enfermera in enfermeras:
-        if enfermera.nombre_usuario == nombre_usuario:
-            return True
-    for doctor in doctores:
-        if doctor.nombre_usuario == nombre_usuario:
-            return True
-    for paciente in pacientes:
-        if paciente.nombre_usuario == nombre_usuario:
-            return True 
-    return False
 
 def verificar_contrasena_enfermera(nombre_usuario, contrasena):
     if nombre_usuario == administrador['nombre_usuario'] and contrasena == administrador['contrasena']:
@@ -332,7 +316,7 @@ def registro_doctor():
     fecha_nacimiento = contenido['fecha_nacimiento']
     sexo = contenido['sexo']
     nombre_usuario = contenido['nombre_usuario']
-    if (existe_usuario_doctor(nombre_usuario)):
+    if (existe_usuario(nombre_usuario)):
         return jsonify({'agregado':0,'mensaje':'El Usuario que desea Agregar Ya Existe'})
     contrasena = contenido['contrasena']
     especialidad = contenido['especialidad']
@@ -341,23 +325,6 @@ def registro_doctor():
     global doctores
     doctores.append(doctor_nuevo)
     return jsonify({'agregado':3,'mensaje':'Registro Exitoso'})
-
-def existe_usuario_doctor(nombre_usuario):
-    if nombre_usuario == administrador['nombre_usuario']:
-        return True
-    global doctores
-    global enfermeras
-    global pacientes
-    for doctor in doctores:
-        if doctor.nombre_usuario == nombre_usuario:
-            return True
-    for enfermera in enfermeras:
-        if enfermera.nombre_usuario == nombre_usuario:
-            return True
-    for paciente in pacientes:
-        if paciente.nombre_usuario == nombre_usuario:
-            return True          
-    return False
 
 def verificar_contrasena_doctor(nombre_usuario, contrasena):
     if nombre_usuario == administrador['nombre_usuario'] and contrasena == administrador['contrasena']:
@@ -481,7 +448,7 @@ def login():
     contrasena = request.args.get("contrasena")
     if nombre_usuario == administrador['nombre_usuario'] and contrasena == administrador['contrasena']:
         return jsonify({'estado':4,'mensaje':'Login Exitoso Administrador'})
-    if (not existe_usuario(nombre_usuario)) and (not existe_usuario_enfermera(nombre_usuario)) and (not existe_usuario_doctor(nombre_usuario)):
+    if (not existe_usuario(nombre_usuario)):
         return jsonify({'estado':0,'mensaje':'El Usuario No Existe'})
     if verificar_contrasena(nombre_usuario, contrasena):
         return jsonify({'estado':1,'mensaje':'Login Existoso Paciente'})
