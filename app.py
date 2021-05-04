@@ -94,13 +94,13 @@ def editar_paciente():
     apellido = contenido['apellido']
     fecha_nacimiento = contenido['fecha_nacimiento']
     sexo = contenido['sexo']
+    i = int(indice)
+    global pacientes
     nombre_usuario = contenido['nombre_usuario']
-    if (existe_usuario(nombre_usuario)):
+    if (existe_usuario(nombre_usuario) and pacientes[i].nombre_usuario != nombre_usuario):
         return jsonify({'agregado':0,'mensaje':'El Nombre de Usuario que desea Agregar Ya Existe'})
     contrasena = contenido['contrasena']
     telefono = contenido['telefono']
-    i = int(indice)
-    global pacientes
     pacientes[i].modificar_perfil(nombre, apellido, fecha_nacimiento, sexo, nombre_usuario, contrasena, telefono)
     return jsonify(pacientes[i].get_json())
 
