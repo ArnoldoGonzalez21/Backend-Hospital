@@ -277,7 +277,7 @@ def editar_enfermera():
     i = int(indice)
     global enfermeras
     nombre_usuario = contenido['nombre_usuario']
-    if (existe_usuario_enfermera(nombre_usuario) and enfermeras[i].nombre_usuario != nombre_usuario):
+    if (existe_usuario(nombre_usuario) and enfermeras[i].nombre_usuario != nombre_usuario):
         return jsonify({'agregado':0,'mensaje':'El Nombre de Usuario que desea Agregar Ya Existe'})
     contrasena = contenido['contrasena']
     telefono = contenido['telefono']
@@ -341,7 +341,7 @@ def editar_doctor():
     i = int(indice)
     global doctores
     nombre_usuario = contenido['nombre_usuario']
-    if (existe_usuario_doctor(nombre_usuario) and doctores[i].nombre_usuario != nombre_usuario):
+    if (existe_usuario(nombre_usuario) and doctores[i].nombre_usuario != nombre_usuario):
         return jsonify({'agregado':0,'mensaje':'El Nombre de Usuario que desea Agregar Ya Existe'})
     contrasena = contenido['contrasena']
     especialidad = contenido['especialidad']
