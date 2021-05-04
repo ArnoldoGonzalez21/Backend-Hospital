@@ -282,7 +282,7 @@ def editar_enfermera():
     contrasena = contenido['contrasena']
     telefono = contenido['telefono']
     enfermeras[i].modificar_perfil(nombre, apellido, fecha_nacimiento, sexo, nombre_usuario, contrasena, telefono)
-    return jsonify(enfermeras[i].get_json())
+    return jsonify({'agregado':1,'mensaje':'Datos Modificados Exitosamente'})
 
 @app.route('/eliminar_enfermera', methods=['POST'])
 def eliminar_enfermera():
@@ -347,7 +347,7 @@ def editar_doctor():
     especialidad = contenido['especialidad']
     telefono = contenido['telefono']
     doctores[i].modificar_perfil(nombre, apellido, fecha_nacimiento, sexo, nombre_usuario, contrasena, especialidad, telefono)
-    return jsonify(doctores[i].get_json())
+    return jsonify({'agregado':1,'mensaje':'Datos Modificados Exitosamente'})
 
 @app.route('/eliminar_doctor', methods=['POST'])
 def eliminar_doctor():
