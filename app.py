@@ -346,7 +346,7 @@ def editar_doctor():
     contrasena = contenido['contrasena']
     especialidad = contenido['especialidad']
     telefono = contenido['telefono']
-    citas = doctores[i].citas
+    citas = contenido['citas']
     doctores[i].modificar_perfil(nombre, apellido, fecha_nacimiento, sexo, nombre_usuario, contrasena, especialidad, telefono, citas)
     return jsonify({'agregado':1,'mensaje':'Datos Modificados Exitosamente'})
 
