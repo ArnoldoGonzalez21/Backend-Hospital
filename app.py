@@ -377,7 +377,7 @@ def registro_medicamento():
     precio = contenido['precio']
     descripcion = contenido['descripcion']
     cantidad = contenido['cantidad']
-    medicamento_nuevo = Medicamento(nombre, precio, descripcion, cantidad, 0, -1)
+    medicamento_nuevo = Medicamento(nombre, precio, descripcion, cantidad, 0, -1, 0)
     global medicamentos
     medicamentos.append(medicamento_nuevo)
     return jsonify({'agregado':4,'mensaje':'Registro Exitoso'})
@@ -417,11 +417,22 @@ def agregar_venta_medicamento():
     posicion = cuerpo['posicion']
     venta = cuerpo['venta']
     paciente = cuerpo['paciente']
+    compra = cuerpo['compra']
     i = int(posicion)
     global medicamentos
     agregar_venta = int(medicamentos[i].venta) + int(venta)
-    medicamentos[i].agregar_venta(agregar_venta, paciente)
+    medicamentos[i].agregar_venta(agregar_venta, paciente, compra)
     return jsonify(medicamentos[i].get_json())
+
+@app.route('/eliminar_compra', methods=['POST'])
+def eliminar_compra():
+    cuerpo = request.get_json()
+    paciente = cuerpo['paciente']
+    global medicamentos
+    for medicamento in medicamentos:
+        medicamento.compra = 0
+    return jsonify({"mensaje":"Compra Eliminada"})
+
 
 @app.route('/eliminar_medicamento_pedido', methods=['POST'])
 def eliminar_medicamento_pedido():
@@ -432,7 +443,7 @@ def eliminar_medicamento_pedido():
     i = int(indice)
     global medicamentos
     quitar_venta = int(medicamentos[i].venta) - int(venta)
-    medicamentos[i].agregar_venta(quitar_venta, paciente)
+    medicamentos[i].agregar_venta(quitar_venta, paciente, 0)
     return jsonify({"mensaje":"Medicamento Eliminado Exitosamente"})
 
 #---------------------------Login----------------------------------
