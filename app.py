@@ -102,7 +102,7 @@ def editar_paciente():
     contrasena = contenido['contrasena']
     telefono = contenido['telefono']
     pacientes[i].modificar_perfil(nombre, apellido, fecha_nacimiento, sexo, nombre_usuario, contrasena, telefono)
-    return jsonify(pacientes[i].get_json())
+    return jsonify({'agregado':1,'mensaje':'Datos Modificados Exitosamente'})
 
 @app.route('/eliminar_paciente', methods=['POST'])
 def eliminar_paciente():
@@ -273,14 +273,14 @@ def editar_enfermera():
     nombre = contenido['nombre']
     apellido = contenido['apellido']
     fecha_nacimiento = contenido['fecha_nacimiento']
-    sexo = contenido['sexo']
+    sexo = contenido['sexo']    
+    i = int(indice)
+    global enfermeras
     nombre_usuario = contenido['nombre_usuario']
-    if (existe_usuario_enfermera(nombre_usuario)):
+    if (existe_usuario_enfermera(nombre_usuario) and enfermeras[i].nombre_usuario != nombre_usuario):
         return jsonify({'agregado':0,'mensaje':'El Nombre de Usuario que desea Agregar Ya Existe'})
     contrasena = contenido['contrasena']
     telefono = contenido['telefono']
-    i = int(indice)
-    global enfermeras
     enfermeras[i].modificar_perfil(nombre, apellido, fecha_nacimiento, sexo, nombre_usuario, contrasena, telefono)
     return jsonify(enfermeras[i].get_json())
 
@@ -338,14 +338,14 @@ def editar_doctor():
     apellido = contenido['apellido']
     fecha_nacimiento = contenido['fecha_nacimiento']
     sexo = contenido['sexo']
+    i = int(indice)
+    global doctores
     nombre_usuario = contenido['nombre_usuario']
-    if (existe_usuario_doctor(nombre_usuario)):
+    if (existe_usuario_doctor(nombre_usuario) and doctores[i].nombre_usuario != nombre_usuario):
         return jsonify({'agregado':0,'mensaje':'El Nombre de Usuario que desea Agregar Ya Existe'})
     contrasena = contenido['contrasena']
     especialidad = contenido['especialidad']
     telefono = contenido['telefono']
-    i = int(indice)
-    global doctores
     doctores[i].modificar_perfil(nombre, apellido, fecha_nacimiento, sexo, nombre_usuario, contrasena, especialidad, telefono)
     return jsonify(doctores[i].get_json())
 
