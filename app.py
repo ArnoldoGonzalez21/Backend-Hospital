@@ -346,8 +346,7 @@ def editar_doctor():
     contrasena = contenido['contrasena']
     especialidad = contenido['especialidad']
     telefono = contenido['telefono']
-    citas = contenido['citas']
-    doctores[i].modificar_perfil(nombre, apellido, fecha_nacimiento, sexo, nombre_usuario, contrasena, especialidad, telefono, citas)
+    doctores[i].modificar_perfil(nombre, apellido, fecha_nacimiento, sexo, nombre_usuario, contrasena, especialidad, telefono)
     return jsonify({'agregado':1,'mensaje':'Datos Modificados Exitosamente'})
 
 @app.route('/eliminar_doctor', methods=['POST'])
